@@ -55,10 +55,13 @@ export default {
       nicknamePlaceholder: 'Please input nickname',
       register: 'Create an account',
       continue: 'Continue',
-      title: 'Start building your smart assistants.',
+      title: 'Start your knowledge-mining AI assistant journey.',
       description:
-        'Sign up for free to explore top RAG technology. Create knowledge bases and AIs to empower your business.',
+        'Build an exclusive knowledge base and leverage artificial intelligence to deeply mine the value of knowledge, injecting new momentum into business growth',
       review: 'from 500+ reviews',
+      feature1: 'Retrieval-Augmented Generation, enhancing response quality',
+      feature2: 'Intelligent knowledge base management and knowledge graph',
+      feature3: 'Visual workflow and agent system',
     },
     header: {
       knowledgeBase: 'Knowledge Base',

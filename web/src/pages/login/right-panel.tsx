@@ -1,46 +1,81 @@
-import { ReactComponent as Avatars } from '@/assets/svg/login-avatars.svg';
-import SvgIcon from '@/components/svg-icon';
-import { Flex, Rate, Space, Typography } from 'antd';
-import classNames from 'classnames';
-
 import { useTranslate } from '@/hooks/common-hooks';
-import styles from './index.less';
+import { Space, Typography } from 'antd';
+import React from 'react';
+import './right-panel.less';
 
-const { Title, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
-const LoginRightPanel = () => {
+const LoginRightPanel: React.FC = () => {
   const { t } = useTranslate('login');
+
   return (
-    <section className={styles.rightPanel}>
-      <SvgIcon name="login-star" width={80}></SvgIcon>
-      <Flex vertical gap={40}>
-        <Title
-          level={1}
-          className={classNames(styles.white, styles.loginTitle)}
-        >
+    <div className="right-panel-content">
+      {/* 装饰圆点 */}
+      <div className="dot dot-1"></div>
+      <div className="dot dot-2"></div>
+
+      <div className="tech-circle">
+        <div className="circle-inner"></div>
+      </div>
+
+      <div className="logo-container">
+        <img
+          src="/logo.svg"
+          alt={t('title')}
+          className="logo"
+          width={64}
+          height={64}
+        />
+      </div>
+
+      <Space
+        direction="vertical"
+        size="large"
+        style={{
+          width: '100%',
+          maxWidth: '560px',
+          position: 'relative',
+          zIndex: 10,
+        }}
+      >
+        <Title level={2} style={{ marginBottom: '16px', color: '#fff' }}>
           {t('title')}
         </Title>
-        <Text className={classNames(styles.pink, styles.loginDescription)}>
+        <Paragraph
+          style={{
+            fontSize: '18px',
+            marginBottom: '32px',
+            color: 'rgba(255,255,255,0.9)',
+          }}
+        >
           {t('description')}
-        </Text>
-        <Flex align="center" gap={16}>
-          <Avatars></Avatars>
-          <Flex vertical>
-            <Space>
-              <Rate disabled defaultValue={5} />
-              <span
-                className={classNames(styles.white, styles.loginRateNumber)}
-              >
-                5.0
-              </span>
-            </Space>
-            <span className={classNames(styles.pink, styles.loginRateReviews)}>
-              {t('review')}
-            </span>
-          </Flex>
-        </Flex>
-      </Flex>
-    </section>
+        </Paragraph>
+
+        <div className="features">
+          <div className="feature-item">
+            <div className="feature-icon">✓</div>
+            <div className="feature-text">{t('feature1')}</div>
+          </div>
+
+          <div className="feature-item">
+            <div className="feature-icon">✓</div>
+            <div className="feature-text">{t('feature2')}</div>
+          </div>
+
+          <div className="feature-item">
+            <div className="feature-icon">✓</div>
+            <div className="feature-text">{t('feature3')}</div>
+          </div>
+        </div>
+      </Space>
+
+      {/* 装饰性几何图形 */}
+      <div className="tech-shapes">
+        <div className="shape shape-1"></div>
+        <div className="shape shape-2"></div>
+        <div className="shape shape-3"></div>
+      </div>
+    </div>
   );
 };
 

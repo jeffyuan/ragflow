@@ -1,133 +1,260 @@
 @import '../../theme/vars';
 
-.loginPage {
+// 登录页容器
+.loginContainer {
   display: flex;
-  background-color: rgba(255, 255, 255, 0.1);
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f5f7fa;
 
-  .loginLeft {
-    // width: 610px;
+  // 登录面板 - 左侧
+  .loginPanel {
     width: 40%;
-    background-color: rgba(255, 255, 255, 0.1);
-    height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-
-  .leftContainer {
-    width: 60%;
-    padding: 5px, 0px, 5px, 0px;
-    margin: 0 auto;
-  }
-
-  .thirdPartyLoginButton {
-    margin-top: 10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    // padding-top: 0px;
-
-    .ant-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
-      font-size: 14px;
-      border-radius: 4px;
-      border: 1px solid #d9d9d9;
-      background: #fff;
-      color: rgba(0, 0, 0, 0.85);
-      transition: all 0.3s;
-
-      &:hover {
-        color: #40a9ff;
-        border-color: #40a9ff;
-      }
-
-      .anticon {
-        font-size: 16px;
-        margin-right: 8px;
-      }
-    }
-  }
-
-  .loginRight {
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+
+    .loginWrapper {
+      width: 100%;
+      max-width: 420px;
+      padding: 1rem;
+    }
+
+    .formHeader {
+      margin-bottom: 2rem;
+      text-align: center;
+
+      .formTitle {
+        font-size: 24px;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 0.5rem;
+      }
+
+      .formSubtitle {
+        font-size: 14px;
+        color: #8c8c8c;
+        margin: 0;
+      }
+    }
+
+    .formContainer {
+      .inputField {
+        height: 40px;
+        border-radius: 4px;
+
+        &:hover,
+        &:focus {
+          border-color: @primary-color;
+        }
+      }
+
+      .actionRow {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+      }
+
+      .submitButton {
+        height: 40px;
+        font-size: 16px;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+      }
+
+      .switchMode {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.45);
+
+        button {
+          padding: 0 4px;
+        }
+      }
+
+      .thirdPartyAuth {
+        margin-top: 1.5rem;
+
+        .divider {
+          display: flex;
+          align-items: center;
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 14px;
+          margin: 16px 0;
+
+          &::before,
+          &::after {
+            content: '';
+            flex: 1;
+            border-top: 1px solid #f0f0f0;
+          }
+
+          span {
+            padding: 0 16px;
+          }
+        }
+
+        .authButton {
+          margin-bottom: 12px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .buttonContent {
+            display: flex;
+            align-items: center;
+
+            span {
+              margin-left: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 内容面板 - 右侧
+  .contentPanel {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    background: linear-gradient(135deg, #1a49a0 0%, #0e67c4 50%, #0080e8 100%);
+    color: #fff;
+    padding: 2rem;
+    overflow: hidden;
+
+    // 科技感装饰元素
     &::before {
-      content: ' ';
+      content: '';
       position: absolute;
       top: 0;
-      bottom: 0;
       left: 0;
       right: 0;
-      background-color: rgba(24, 73, 169, 0.6);
-      background-image: url('@/assets/svg/login-background.svg');
-      background-size: cover;
-      background-blend-mode: multiply;
-      filter: blur(3px);
-      background-position: center;
-      z-index: -1;
+      bottom: 0;
+      background-image: radial-gradient(
+          circle at 10% 20%,
+          rgba(255, 255, 255, 0.06) 0%,
+          transparent 20%
+        ),
+        radial-gradient(
+          circle at 80% 60%,
+          rgba(255, 255, 255, 0.06) 0%,
+          transparent 20%
+        ),
+        linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      background-size:
+        100% 100%,
+        100% 100%,
+        200% 100%;
+      background-position:
+        0 0,
+        0 0,
+        -100% 0;
+      animation: shift 15s linear infinite;
+      z-index: 1;
     }
-    .white {
+
+    // 网格装饰
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+      background-size: 40px 40px;
+      z-index: 0;
     }
-    .pink {
-      color: #e9d7fe;
+
+    // 装饰圆点
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
     }
-    .rightPanel {
-      max-width: 670px;
-      .loginTitle {
-        font-size: 68px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 90px;
-        letter-spacing: -1.44px;
+
+    .dot-1 {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      right: -150px;
+    }
+
+    .dot-2 {
+      width: 200px;
+      height: 200px;
+      top: -100px;
+      left: 10%;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    // 动画效果
+    @keyframes shift {
+      0% {
+        background-position:
+          0 0,
+          0 0,
+          -100% 0;
       }
-      .loginDescription {
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 30px;
+      100% {
+        background-position:
+          0 0,
+          0 0,
+          100% 0;
       }
-      .loginRateNumber {
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 24px;
+    }
+
+    // 右侧面板内容样式
+    :global {
+      .ant-typography {
+        color: #fff;
       }
-      .loginRateReviews {
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 24px;
+
+      .ant-rate-star {
+        margin-right: 4px;
       }
     }
   }
 
-  .loginTitle {
-    //styleName: Heading/1;
-    font-size: 38px;
-    font-weight: 600;
-    line-height: 46px;
-    letter-spacing: 0em;
-    height: 80px;
-    margin-bottom: 69px;
-
-    // text-align: center;
-    span {
-      font-size: 16px;
-      line-height: 24px;
+  // 响应式设计
+  @media screen and (max-width: 992px) {
+    .loginPanel {
+      width: 50%;
     }
   }
 
-  @media screen and (max-width: 957px) {
-    .loginLeft {
+  @media screen and (max-width: 768px) {
+    flex-direction: column-reverse;
+
+    .loginPanel {
       width: 100%;
-      height: 100%;
+      padding: 2rem 1rem;
     }
 
-    .modal {
-      width: 80%;
+    .contentPanel {
+      height: 260px;
     }
   }
 }

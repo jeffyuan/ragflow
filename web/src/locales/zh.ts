@@ -55,10 +55,13 @@ export default {
       nicknamePlaceholder: '请输入名称',
       register: '创建账户',
       continue: '继续',
-      title: '开始构建您的智能助手',
+      title: '开启您的知识挖掘智能助手之旅',
       description:
-        '免费注册以探索顶级 RAG 技术。 创建知识库和人工智能来增强您的业务',
+        '构建专属知识库，借助人工智能深度挖掘知识价值，为业务增长注入新动能',
       review: '来自 500 多条评论',
+      feature1: '检索增强生成，提升应答质量',
+      feature2: '智能知识库管理与知识图谱',
+      feature3: '可视化工作流与智能体系统',
     },
     header: {
       knowledgeBase: '知识库',
