@@ -61,10 +61,13 @@ i18n
   .init({
     detection: {
       lookupLocalStorage: 'lng',
+      order: [], // 禁用自动检测
+      caches: [], // 禁用缓存
     },
+    lng: 'zh', // 强制使用中文
     supportedLngs: Object.values(LanguageAbbreviation),
     resources,
-    fallbackLng: 'en',
+    fallbackLng: 'zh',
     interpolation: {
       escapeValue: false,
     },

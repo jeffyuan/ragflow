@@ -1,5 +1,5 @@
 import { useTranslate } from '@/hooks/common-hooks';
-import { DownOutlined, GithubOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, MenuProps, Space } from 'antd';
 import camelCase from 'lodash/camelCase';
 import React, { useCallback, useMemo } from 'react';
@@ -10,7 +10,7 @@ import { LanguageList, LanguageMap } from '@/constants/common';
 import { useChangeLanguage } from '@/hooks/logic-hooks';
 import { useFetchUserInfo, useListTenant } from '@/hooks/user-setting-hooks';
 import { TenantRole } from '@/pages/user-setting/constants';
-import { BellRing, CircleHelp, MoonIcon, SunIcon } from 'lucide-react';
+import { BellRing } from 'lucide-react';
 import { useNavigate } from 'umi';
 import styled from './index.less';
 
@@ -77,7 +77,7 @@ const RightToolBar = () => {
             <DownOutlined />
           </Space>
         </Dropdown>
-        <Circle>
+        {/* <Circle>
           <GithubOutlined onClick={handleGithubCLick} />
         </Circle>
         <Circle>
@@ -89,7 +89,7 @@ const RightToolBar = () => {
           ) : (
             <SunIcon onClick={onSunClick} size={20} />
           )}
-        </Circle>
+        </Circle> */}
         {showBell && (
           <Circle>
             <div className="relative" onClick={handleBellClick}>
