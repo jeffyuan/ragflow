@@ -2,7 +2,7 @@
 
 ## Overview
 
-RAGFlow is a web application that integrates Retrieval-Augmented Generation (RAG) capabilities. The platform provides knowledge base management, conversational AI, and agent-based workflows through a modern web interface. The application name in Chinese is "知识挖掘" (Knowledge Mining).
+RAGFlow is a web application that integrates Retrieval-Augmented Generation (RAG) capabilities. The platform provides knowledge base management, conversational AI, and agent-based workflows through a modern web interface. The application name in Chinese is "知识引擎" (Knowledge Engine).
 
 ## Project Structure
 
