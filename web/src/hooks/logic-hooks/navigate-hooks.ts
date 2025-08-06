@@ -35,9 +35,12 @@ export const useNavigatePage = () => {
     navigate(Routes.Chats);
   }, [navigate]);
 
-  const navigateToChat = useCallback(() => {
-    navigate(Routes.Chat);
-  }, [navigate]);
+  const navigateToChat = useCallback(
+    (id: string) => () => {
+      navigate(`${Routes.Chat}/${id}`);
+    },
+    [navigate],
+  );
 
   const navigateToAgents = useCallback(() => {
     navigate(Routes.Agents);
@@ -50,6 +53,13 @@ export const useNavigatePage = () => {
   const navigateToAgent = useCallback(
     (id: string) => () => {
       navigate(`${Routes.Agent}/${id}`);
+    },
+    [navigate],
+  );
+
+  const navigateToAgentLogs = useCallback(
+    (id: string) => () => {
+      navigate(`${Routes.AgentLogPage}/${id}`);
     },
     [navigate],
   );
@@ -120,6 +130,7 @@ export const useNavigatePage = () => {
     navigateToChunk,
     navigateToAgents,
     navigateToAgent,
+    navigateToAgentLogs,
     navigateToAgentTemplates,
     navigateToSearchList,
     navigateToSearch,

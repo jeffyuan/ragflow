@@ -15,7 +15,6 @@
 #
 import logging
 import json
-import os
 from flask import request
 from flask_login import login_required, current_user
 from api.db.services.llm_service import LLMFactoriesService, TenantLLMService, LLMService
@@ -24,7 +23,7 @@ from api.utils.api_utils import server_error_response, get_data_error_result, va
 from api.db import StatusEnum, LLMType
 from api.db.db_models import TenantLLM
 from api.utils.api_utils import get_json_result
-from api.utils.file_utils import get_project_base_directory
+from api.utils.base64_image import test_image
 from rag.llm import EmbeddingModel, ChatModel, RerankModel, CvModel, TTSModel
 
 
@@ -256,10 +255,10 @@ def add_llm():
             base_url=llm["api_base"]
         )
         try:
-            with open(os.path.join(get_project_base_directory(), "web/src/assets/yay.jpg"), "rb") as f:
-                m, tc = mdl.describe(f.read())
-                if not m and not tc:
-                    raise Exception(m)
+            image_data = test_image
+            m, tc = mdl.describe(image_data)
+            if not m and not tc:
+                raise Exception(m)
         except Exception as e:
             msg += f"\nFail to access model({mdl_nm})." + str(e)
     elif llm["model_type"] == LLMType.TTS:

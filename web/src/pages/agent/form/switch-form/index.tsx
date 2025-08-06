@@ -28,6 +28,7 @@ import {
 } from '../../constant';
 import { useBuildQueryVariableOptions } from '../../hooks/use-get-begin-query';
 import { IOperatorForm } from '../../interface';
+import { FormWrapper } from '../components/form-wrapper';
 import { useValues } from './use-values';
 import { useWatchFormChange } from './use-watch-change';
 
@@ -127,7 +128,8 @@ function ConditionCards({
                 'relative bg-transparent border-input-border border flex-1 min-w-0',
                 {
                   'before:w-10 before:absolute before:h-[1px] before:bg-input-border before:top-1/2 before:-left-10':
-                    index === 0 || index === fields.length - 1,
+                    fields.length > 1 &&
+                    (index === 0 || index === fields.length - 1),
                 },
               )}
             >
@@ -248,13 +250,11 @@ function SwitchForm({ node }: IOperatorForm) {
 
   return (
     <Form {...form}>
-      <form
-        className="space-y-6 p-5 "
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <FormWrapper>
         {fields.map((field, index) => {
+          const name = `${ConditionKey}.${index}`;
+          const conditions: Array<any> = form.getValues(`${name}.${ItemKey}`);
+          const conditionLength = conditions.length;
           return (
             <FormContainer key={field.id} className="">
               <div className="flex justify-between items-center">
@@ -272,28 +272,30 @@ function SwitchForm({ node }: IOperatorForm) {
                   </Button>
                 )}
               </div>
-              <section className="flex  gap-2 !mt-2 relative">
-                <section className="flex flex-col w-[72px]">
-                  <div className="relative  w-1 flex-1 before:absolute before:w-[1px]  before:bg-input-border before:top-20 before:bottom-0 before:left-10"></div>
-                  <FormField
-                    control={form.control}
-                    name={`${ConditionKey}.${index}.logical_operator`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <RAGFlowSelect
-                            {...field}
-                            options={switchLogicOperatorOptions}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="relative  w-1 flex-1 before:absolute before:w-[1px]  before:bg-input-border before:top-0 before:bottom-36 before:left-10"></div>
-                </section>
+              <section className="flex gap-2 !mt-2 relative">
+                {conditionLength > 1 && (
+                  <section className="flex flex-col w-[72px]">
+                    <div className="relative  w-1 flex-1 before:absolute before:w-[1px]  before:bg-input-border before:top-20 before:bottom-0 before:left-10"></div>
+                    <FormField
+                      control={form.control}
+                      name={`${ConditionKey}.${index}.logical_operator`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <RAGFlowSelect
+                              {...field}
+                              options={switchLogicOperatorOptions}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="relative  w-1 flex-1 before:absolute before:w-[1px]  before:bg-input-border before:top-0 before:bottom-36 before:left-10"></div>
+                  </section>
+                )}
                 <ConditionCards
-                  name={`${ConditionKey}.${index}`}
+                  name={name}
                   removeParent={remove}
                   parentIndex={index}
                   parentLength={fields.length}
@@ -317,7 +319,7 @@ function SwitchForm({ node }: IOperatorForm) {
         >
           Add
         </BlockButton>
-      </form>
+      </FormWrapper>
     </Form>
   );
 }
