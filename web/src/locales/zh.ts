@@ -92,6 +92,12 @@ export default {
       description:
         '免费注册以探索顶级 RAG 技术。 创建知识库和人工智能来增强您的业务',
       review: '来自 500 多条评论',
+      promoTitle: '开启您的知识挖掘智能助手之旅',
+      promoDescription:
+        '构建专属知识库，借助人工智能深度挖掘知识价值，为业务增长注入新动能',
+      featureRetrieval: '检索增强生成，提升应答质量',
+      featureKnowledge: '智能知识库管理与知识图谱',
+      featureWorkflow: '可视化工作流与智能体系统',
     },
     header: {
       knowledgeBase: '知识库',

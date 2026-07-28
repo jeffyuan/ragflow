@@ -109,6 +109,12 @@ export default {
         'Sign up for free to explore top RAG technology. Create datasets and AIs to empower your business.',
       review: 'from 500+ reviews',
       seeAll: 'See all',
+      promoTitle: 'Start your knowledge mining intelligent assistant journey',
+      promoDescription:
+        'Build your exclusive knowledge base, leverage AI to deeply mine knowledge value, and inject new momentum into business growth.',
+      featureRetrieval: 'Retrieval-augmented generation for better answers',
+      featureKnowledge: 'Intelligent knowledge base & knowledge graph',
+      featureWorkflow: 'Visual workflow & agent system',
     },
     header: {
       knowledgeBase: 'Dataset',

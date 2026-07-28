@@ -1,4 +1,3 @@
-import SvgIcon from '@/components/svg-icon';
 import { useAuth } from '@/hooks/auth-hooks';
 import {
   useLogin,
@@ -8,11 +7,10 @@ import {
 } from '@/hooks/use-login-request';
 import { useSystemConfig } from '@/hooks/use-system-request';
 import { rsaPsw } from '@/utils';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import Spotlight from '@/components/spotlight';
 import { Button, ButtonLoading } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -27,10 +25,10 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
+import { Check } from 'lucide-react';
 import { z } from 'zod';
 import { NICKNAME_PATTERN } from '../user-setting/profile/constants';
-import { BgSvg } from './bg';
-import FlipCard3D, { FlipFaceContext } from './card';
+import SvgIcon from '@/components/svg-icon';
 import './index.less';
 
 type LoginFormContentProps = {
@@ -47,6 +45,104 @@ type LoginFormContentProps = {
   disablePasswordLogin?: boolean;
 };
 
+function PromoPanel({
+  t,
+}: {
+  t: ReturnType<typeof useTranslation>['t'];
+}) {
+  const features = [
+    t('featureRetrieval'),
+    t('featureKnowledge'),
+    t('featureWorkflow'),
+  ];
+
+  return (
+    <div className="login-promo-panel relative hidden lg:flex flex-col items-center justify-center text-white overflow-hidden">
+      <div className="login-grid-bg absolute inset-0 pointer-events-none" />
+      <div className="login-glow absolute inset-0 pointer-events-none" />
+
+      <div className="relative z-10 flex flex-col items-center text-center px-12 max-w-[560px]">
+        <div className="w-20 h-20 mb-8 flex items-center justify-center">
+          <svg
+            viewBox="0 0 80 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full"
+          >
+            <rect
+              x="12"
+              y="12"
+              width="24"
+              height="24"
+              rx="4"
+              stroke="currentColor"
+              strokeWidth="3"
+            />
+            <rect
+              x="44"
+              y="12"
+              width="24"
+              height="24"
+              rx="4"
+              stroke="currentColor"
+              strokeWidth="3"
+            />
+            <rect
+              x="12"
+              y="44"
+              width="24"
+              height="24"
+              rx="4"
+              stroke="currentColor"
+              strokeWidth="3"
+            />
+            <rect
+              x="44"
+              y="44"
+              width="24"
+              height="24"
+              rx="4"
+              stroke="currentColor"
+              strokeWidth="3"
+            />
+            <circle cx="36" cy="24" r="3" fill="currentColor" />
+            <circle cx="36" cy="56" r="3" fill="currentColor" />
+            <circle cx="24" cy="36" r="3" fill="currentColor" />
+            <circle cx="56" cy="36" r="3" fill="currentColor" />
+            <path
+              d="M36 24H44M36 56H44M24 36H12M56 36H68"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        <h2 className="text-3xl font-semibold mb-6 leading-tight">
+          {t('promoTitle')}
+        </h2>
+        <p className="text-base text-white/85 mb-10 leading-relaxed">
+          {t('promoDescription')}
+        </p>
+
+        <div className="w-full space-y-4">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 px-5 py-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 text-left"
+            >
+              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+                <Check className="w-3 h-3 text-white" strokeWidth={3} />
+              </div>
+              <span className="text-sm font-medium">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LoginFormContent({
   isLoginPage,
   title,
@@ -60,23 +156,24 @@ function LoginFormContent({
   t,
   disablePasswordLogin,
 }: LoginFormContentProps) {
-  const face = useContext(FlipFaceContext);
-  const isActiveFace = isLoginPage ? face === 'front' : face === 'back';
-
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <div className="text-center mb-8">
-        <h2 className="text-xl font-semibold text-text-primary">
+    <div className="flex flex-col items-center justify-center w-full max-w-[420px] mx-auto px-6">
+      <div className="text-center mb-10">
+        <h2 className="text-2xl font-semibold text-text-primary mb-2">
           {title === 'login' ? t('loginTitle') : t('signUpTitle')}
         </h2>
+        <p className="text-text-secondary text-sm">
+          {title === 'login' ? t('loginDescription') : t('registerDescription')}
+        </p>
       </div>
-      <div className=" w-full max-w-[540px] bg-bg-component backdrop-blur-sm rounded-2xl shadow-xl pt-14 pl-10 pr-10 pb-2 border border-border-button ">
+
+      <div className="w-full">
         {!disablePasswordLogin && (
           <Form {...form}>
             <form
-              className="flex flex-col gap-8 text-text-primary "
+              className="flex flex-col gap-6 text-text-primary"
               data-testid="auth-form"
-              data-active={isActiveFace ? 'true' : undefined}
+              data-active={isLoginPage ? 'true' : 'false'}
               onSubmit={form.handleSubmit(onCheck)}
             >
               <FormField
@@ -178,7 +275,7 @@ function LoginFormContent({
                 data-testid="auth-submit"
                 type="submit"
                 loading={loading}
-                className="bg-metallic-gradient border-b-[#00BEB4] border-b-2 hover:bg-metallic-gradient hover:border-b-[#02bcdd] w-full my-8"
+                className="w-full h-11 mt-2 bg-[#1677ff] hover:bg-[#4096ff] text-white border-none rounded-lg text-base font-medium"
               >
                 {title === 'login' ? t('login') : t('continue')}
               </ButtonLoading>
@@ -187,7 +284,7 @@ function LoginFormContent({
         )}
 
         {title === 'login' && channels && channels.length > 0 && (
-          <div className={disablePasswordLogin ? 'py-8' : 'mt-3 border'}>
+          <div className={disablePasswordLogin ? 'py-8' : 'mt-6 border-t pt-6'}>
             {channels.map((item) => (
               <Button
                 variant={'transparent'}
@@ -211,14 +308,14 @@ function LoginFormContent({
         )}
 
         {!disablePasswordLogin && title === 'login' && registerEnabled && (
-          <div className="mt-10 text-right">
+          <div className="mt-8 text-center">
             <p className="text-text-disabled text-sm">
               {t('signInTip')}
               <Button
                 data-testid="auth-toggle-register"
                 variant={'transparent'}
                 onClick={changeTitle}
-                className="text-accent-primary/90 hover:text-accent-primary hover:bg-transparent font-medium border-none transition-colors duration-200"
+                className="text-[#1677ff] hover:text-[#4096ff] hover:bg-transparent font-medium border-none transition-colors duration-200 px-1"
               >
                 {t('signUp')}
               </Button>
@@ -226,14 +323,14 @@ function LoginFormContent({
           </div>
         )}
         {!disablePasswordLogin && title === 'register' && (
-          <div className="mt-10 text-right">
+          <div className="mt-8 text-center">
             <p className="text-text-disabled text-sm">
               {t('signUpTip')}
               <Button
                 data-testid="auth-toggle-login"
                 variant={'transparent'}
                 onClick={changeTitle}
-                className="text-accent-primary/90 hover:text-accent-primary hover:bg-transparent font-medium border-none transition-colors duration-200"
+                className="text-[#1677ff] hover:text-[#4096ff] hover:bg-transparent font-medium border-none transition-colors duration-200 px-1"
               >
                 {t('login')}
               </Button>
@@ -342,12 +439,13 @@ const Login = () => {
         }
       } else {
         const code = await register({
-          nickname: params.nickname,
+          nickname: params.nickname || '',
           email: params.email,
           password: rsaPassWord,
         });
         if (code === 0) {
           setTitle('login');
+          setIsLoginPage(true);
         }
       }
     } catch (errorInfo) {
@@ -356,60 +454,24 @@ const Login = () => {
   };
 
   return (
-    <>
-      <Spotlight opcity={0.4} coverage={60} color={'rgb(128, 255, 248)'} />
-      <Spotlight
-        opcity={0.3}
-        coverage={12}
-        X={'10%'}
-        Y={'-10%'}
-        color={'rgb(128, 255, 248)'}
-      />
-      <Spotlight
-        opcity={0.3}
-        coverage={12}
-        X={'90%'}
-        Y={'-10%'}
-        color={'rgb(128, 255, 248)'}
-      />
-      <div className=" h-[inherit] relative overflow-auto">
-        <BgSvg isPaused />
-
-        <div className="z-20 absolute top-3 flex flex-col items-center mb-12 w-full text-text-primary">
-          <div className="flex items-center mb-4 w-full pl-10 pt-10 ">
-            <div className="w-12 h-12 p-2 rounded-lg flex items-center justify-center mr-3">
-              <img
-                src={'/logo.svg'}
-                alt="logo"
-                className="size-8 mr-[12] cursor-pointer"
-              />
-            </div>
-            <div className="text-xl font-bold self-center">知识引擎</div>
-          </div>
-          <h1 className="text-[36px] font-medium  text-center mb-2">
-            {t('title')}
-          </h1>
-        </div>
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-[1050px] px-4 sm:px-6 lg:px-8">
-          {/* Login Form */}
-          <FlipCard3D isLoginPage={isLoginPage}>
-            <LoginFormContent
-              isLoginPage={isLoginPage}
-              title={title}
-              form={form}
-              loading={loading}
-              onCheck={onCheck}
-              changeTitle={changeTitle}
-              registerEnabled={registerEnabled}
-              channels={channels || []}
-              handleLoginWithChannel={handleLoginWithChannel}
-              t={t}
-              disablePasswordLogin={!!config?.disablePasswordLogin}
-            />
-          </FlipCard3D>
-        </div>
+    <div className="min-h-screen w-full flex">
+      <div className="flex-1 flex items-center justify-center bg-white">
+        <LoginFormContent
+          isLoginPage={isLoginPage}
+          title={title}
+          form={form}
+          loading={loading}
+          onCheck={onCheck}
+          changeTitle={changeTitle}
+          registerEnabled={registerEnabled}
+          channels={channels || []}
+          handleLoginWithChannel={handleLoginWithChannel}
+          t={t}
+          disablePasswordLogin={!!config?.disablePasswordLogin}
+        />
       </div>
-    </>
+      <PromoPanel t={t} />
+    </div>
   );
 };
 
